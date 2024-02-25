@@ -33,6 +33,9 @@ export default function GSheetSetup({ onCancel }: GSheetSetupProps) {
   const getAuthStatus = async () => {
     const result = await verifyAuth();
     if (result) {
+      if (result.authenticated === 'pending') {
+        setTimeout(() => getAuthStatus(), 5 * 1000);
+      }
       setAuthenticationStatus(result.authenticated);
     }
   };
